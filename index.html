@@ -15,25 +15,46 @@
     --rule: #dedad0;
     --serif: 'DM Serif Display', Georgia, serif;
     --sans: 'DM Sans', system-ui, sans-serif;
-    --c1: #2a5c8f; --c1l: #e8f0f8; --c1b: #b8ceeb;
-    --c2: #1d7a5a; --c2l: #e6f4ef; --c2b: #a8d9c8;
-    --c3: #8a4a1a; --c3l: #f5ede4; --c3b: #d4b090;
-    --c4: #5a3a8a; --c4l: #ede8f5; --c4b: #c0aedd;
-    --c5: #1a6a7a; --c5l: #e4f2f5; --c5b: #90c8d4;
   }
   html { scroll-behavior: smooth; }
   body { font-family: var(--sans); background: var(--paper); color: var(--ink); font-size: 16px; line-height: 1.7; font-weight: 300; }
 
   nav {
-    position: sticky; top: 0; z-index: 100;
-    background: rgba(248,246,241,0.93); backdrop-filter: blur(8px);
+    position: sticky; top: 0; z-index: 200;
+    background: rgba(248,246,241,0.95); backdrop-filter: blur(10px);
     border-bottom: 1px solid var(--rule);
     padding: 0 2rem; display: flex; align-items: center; justify-content: space-between; height: 56px;
   }
-  .nav-name { font-family: var(--serif); font-size: 17px; color: var(--ink); }
-  .nav-links { display: flex; gap: 1.5rem; list-style: none; }
-  .nav-links a { font-size: 13px; color: var(--ink-soft); text-decoration: none; letter-spacing: 0.03em; transition: color 0.2s; }
-  .nav-links a:hover { color: var(--accent); }
+  .nav-name { font-family: var(--serif); font-size: 17px; color: var(--ink); text-decoration: none; }
+  .nav-right { display: flex; gap: 0; list-style: none; align-items: center; }
+  .nav-item { position: relative; }
+  .nav-link {
+    font-size: 13px; color: var(--ink-soft); text-decoration: none;
+    padding: 0 14px; height: 56px; display: flex; align-items: center;
+    gap: 5px; letter-spacing: 0.03em; transition: color 0.2s; white-space: nowrap;
+  }
+  .nav-link:hover { color: var(--accent); }
+  .nav-link .arrow { font-size: 9px; transition: transform 0.2s; }
+  .nav-item:hover .arrow { transform: rotate(180deg); }
+  .dropdown {
+    position: absolute; top: 100%; left: 0;
+    background: var(--paper-card); border: 1px solid var(--rule);
+    border-radius: 8px; box-shadow: 0 8px 24px rgba(0,0,0,0.10);
+    min-width: 280px; opacity: 0; pointer-events: none;
+    transform: translateY(-6px); transition: all 0.18s ease;
+    z-index: 300;
+  }
+  .nav-item:hover .dropdown { opacity: 1; pointer-events: auto; transform: translateY(0); }
+  .dropdown a {
+    display: flex; align-items: center; gap: 10px;
+    padding: 10px 16px; font-size: 13px; color: var(--ink-soft);
+    text-decoration: none; transition: background 0.15s;
+    border-bottom: 1px solid var(--rule);
+  }
+  .dropdown a:last-child { border-bottom: none; border-radius: 0 0 8px 8px; }
+  .dropdown a:first-child { border-radius: 8px 8px 0 0; }
+  .dropdown a:hover { background: var(--paper-warm); color: var(--ink); }
+  .dd-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
 
   .hero { max-width: 940px; margin: 0 auto; padding: 5rem 2rem 3.5rem; display: grid; grid-template-columns: 1fr 240px; gap: 3.5rem; align-items: start; }
   .hero-eyebrow { font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent-mid); margin-bottom: 1rem; font-weight: 500; }
@@ -63,37 +84,25 @@
   .stat-num { font-family: var(--serif); font-size: 28px; color: var(--accent); line-height: 1; margin-bottom: 4px; }
   .stat-label { font-size: 11px; color: var(--ink-muted); letter-spacing: 0.04em; }
 
-  /* EXPERTISE CARDS */
-  .expertise-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 14px; }
-  .exp-card { border-radius: 12px; padding: 20px; border: 1px solid var(--rule); background: var(--paper-card); position: relative; overflow: hidden; }
-  .exp-card::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 3px; }
-  .exp-card.c1::before { background: var(--c1); }
-  .exp-card.c2::before { background: var(--c2); }
-  .exp-card.c3::before { background: var(--c3); }
-  .exp-card.c4::before { background: var(--c4); }
-  .exp-card.c5::before { background: var(--c5); }
-  .exp-icon { width: 40px; height: 40px; border-radius: 10px; display: flex; align-items: center; justify-content: center; margin-bottom: 12px; font-size: 20px; }
-  .exp-card.c1 .exp-icon { background: var(--c1l); }
-  .exp-card.c2 .exp-icon { background: var(--c2l); }
-  .exp-card.c3 .exp-icon { background: var(--c3l); }
-  .exp-card.c4 .exp-icon { background: var(--c4l); }
-  .exp-card.c5 .exp-icon { background: var(--c5l); }
-  .exp-title { font-size: 14px; font-weight: 500; color: var(--ink); margin-bottom: 6px; }
-  .exp-card.c1 .exp-title { color: var(--c1); }
-  .exp-card.c2 .exp-title { color: var(--c2); }
-  .exp-card.c3 .exp-title { color: var(--c3); }
-  .exp-card.c4 .exp-title { color: var(--c4); }
-  .exp-card.c5 .exp-title { color: var(--c5); }
-  .exp-desc { font-size: 12px; color: var(--ink-soft); line-height: 1.6; margin-bottom: 10px; }
-  .exp-pills { display: flex; flex-wrap: wrap; gap: 4px; }
-  .exp-pill { font-size: 11px; padding: 2px 8px; border-radius: 4px; }
-  .exp-card.c1 .exp-pill { background: var(--c1l); color: var(--c1); border: 1px solid var(--c1b); }
-  .exp-card.c2 .exp-pill { background: var(--c2l); color: var(--c2); border: 1px solid var(--c2b); }
-  .exp-card.c3 .exp-pill { background: var(--c3l); color: var(--c3); border: 1px solid var(--c3b); }
-  .exp-card.c4 .exp-pill { background: var(--c4l); color: var(--c4); border: 1px solid var(--c4b); }
-  .exp-card.c5 .exp-pill { background: var(--c5l); color: var(--c5); border: 1px solid var(--c5b); }
+  /* EXPERTISE TEASER */
+  .expertise-teaser { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 12px; }
+  .exp-tile {
+    background: var(--paper-card); border: 1px solid var(--rule); border-radius: 10px;
+    padding: 18px; text-decoration: none; transition: all 0.18s;
+    display: flex; flex-direction: column; gap: 8px;
+    border-top: 3px solid transparent;
+  }
+  .exp-tile:hover { box-shadow: 0 4px 20px rgba(0,0,0,0.08); transform: translateY(-2px); }
+  .exp-tile.c1 { border-top-color: #1d7a5a; }
+  .exp-tile.c2 { border-top-color: #8a4a1a; }
+  .exp-tile.c3 { border-top-color: #5a3a8a; }
+  .exp-tile.c4 { border-top-color: #1a6a7a; }
+  .exp-tile.c5 { border-top-color: #2a5c8f; }
+  .tile-icon { font-size: 22px; }
+  .tile-title { font-size: 14px; font-weight: 500; color: var(--ink); line-height: 1.3; }
+  .tile-desc { font-size: 12px; color: var(--ink-muted); line-height: 1.5; }
+  .tile-arrow { font-size: 12px; color: var(--accent); margin-top: auto; }
 
-  /* TIMELINE */
   .timeline { display: flex; flex-direction: column; }
   .tl-item { display: grid; grid-template-columns: 140px 1px 1fr; gap: 0 1.5rem; padding-bottom: 2.5rem; }
   .tl-item:last-child { padding-bottom: 0; }
@@ -107,15 +116,7 @@
   .tl-desc { font-size: 13px; color: var(--ink-soft); line-height: 1.6; }
   .tl-tags { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 8px; }
   .tl-tag { font-size: 11px; padding: 2px 8px; border-radius: 4px; background: var(--paper-warm); color: var(--ink-muted); border: 1px solid var(--rule); }
-  .domain-dots { display: flex; gap: 4px; margin-bottom: 6px; }
-  .dd { width: 8px; height: 8px; border-radius: 50%; }
-  .dd.c1 { background: var(--c1); }
-  .dd.c2 { background: var(--c2); }
-  .dd.c3 { background: var(--c3); }
-  .dd.c4 { background: var(--c4); }
-  .dd.c5 { background: var(--c5); }
 
-  /* PUBS */
   .pubs { display: flex; flex-direction: column; gap: 12px; }
   .pub-card { background: var(--paper-card); border: 1px solid var(--rule); border-radius: 8px; padding: 16px 20px; border-left: 3px solid var(--accent); transition: box-shadow 0.2s; }
   .pub-card:hover { box-shadow: 0 2px 16px rgba(42,92,143,0.08); }
@@ -126,7 +127,6 @@
   .badge-blue { background: var(--accent-light); color: var(--accent); border: 1px solid #b8ceeb; }
   .badge-gray { background: var(--paper-warm); color: var(--ink-muted); border: 1px solid var(--rule); }
 
-  /* SKILLS */
   .skills-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 14px; }
   .skill-group { background: var(--paper-card); border: 1px solid var(--rule); border-radius: 8px; padding: 14px 16px; }
   .skill-group-title { font-size: 12px; font-weight: 500; color: var(--ink-soft); margin-bottom: 10px; }
@@ -142,7 +142,7 @@
     .tl-item { grid-template-columns: 80px 1px 1fr; }
     .stats-bar { grid-template-columns: repeat(2, 1fr); }
     nav { padding: 0 1rem; }
-    .nav-links { gap: 1rem; }
+    .dropdown { min-width: 240px; left: auto; right: 0; }
     section { padding: 2rem 1.5rem; }
   }
 </style>
@@ -150,15 +150,26 @@
 <body>
 
 <nav>
-  <div class="nav-name">Dmitrii Mamaikin</div>
-  <ul class="nav-links">
-    <li><a href="#expertise">Expertise</a></li>
-    <li><a href="#experience">Experience</a></li>
-    <li><a href="#publications">Publications</a></li>
-    <li><a href="#skills">Skills</a></li>
-    <li><a href="#contact">Contact</a></li>
+  <a href="index.html" class="nav-name">Dmitrii Mamaikin</a>
+  <ul class="nav-right">
+    <li class="nav-item">
+      <a href="expertise.html" class="nav-link">
+        Expertise <span class="arrow">▼</span>
+      </a>
+      <div class="dropdown">
+        <a href="expertise.html#hydrogen"><span class="dd-dot" style="background:#1d7a5a"></span>Hydrogen &amp; Fuel Cell Systems</a>
+        <a href="expertise.html#components"><span class="dd-dot" style="background:#8a4a1a"></span>Compressors, Pumps, Valves &amp; Injection</a>
+        <a href="expertise.html#fluid"><span class="dd-dot" style="background:#5a3a8a"></span>Fluid Mechanics</a>
+        <a href="expertise.html#ml"><span class="dd-dot" style="background:#1a6a7a"></span>Machine Learning &amp; Data Science</a>
+        <a href="expertise.html#norms"><span class="dd-dot" style="background:#2a5c8f"></span>Norms &amp; Regulations</a>
+      </div>
+    </li>
+    <li class="nav-item"><a href="#experience" class="nav-link">Experience</a></li>
+    <li class="nav-item"><a href="#publications" class="nav-link">Publications</a></li>
+    <li class="nav-item"><a href="#contact" class="nav-link">Contact</a></li>
   </ul>
 </nav>
+
 
 <div class="hero">
   <div>
@@ -199,7 +210,6 @@
   </div>
 </div>
 
-<!-- STATS -->
 <section style="padding-top: 0; border-top: none;">
   <div class="stats-bar">
     <div class="stat"><div class="stat-num">10+</div><div class="stat-label">years experience</div></div>
@@ -209,156 +219,88 @@
   </div>
 </section>
 
-<!-- EXPERTISE DOMAINS -->
-<section id="expertise">
+<section id="expertise-teaser">
   <div class="section-label">Areas of expertise</div>
-  <div class="expertise-grid">
-
-    <div class="exp-card c1">
-      <div class="exp-icon">🔬</div>
-      <div class="exp-title">Optics, Laser &amp; Measurement Technology</div>
-      <div class="exp-desc">Advanced optical diagnostics from high-speed imaging to synchrotron X-ray phase-contrast at Argonne National Laboratory. Expertise in laser-based flow measurement and image processing.</div>
-      <div class="exp-pills">
-        <span class="exp-pill">Micro-PIV (5 MHz)</span>
-        <span class="exp-pill">Synchrotron XPCI</span>
-        <span class="exp-pill">High-speed shadowgraphy</span>
-        <span class="exp-pill">LDA / PDA</span>
-        <span class="exp-pill">Long-distance microscopy</span>
-        <span class="exp-pill">Image processing</span>
-        <span class="exp-pill">LabVIEW · IMC Famos</span>
-      </div>
-    </div>
-
-    <div class="exp-card c2">
-      <div class="exp-icon">⚡</div>
-      <div class="exp-title">Hydrogen &amp; Fuel Cell Systems</div>
-      <div class="exp-desc">Component ownership and system integration of 500 kW modular fuel cell and steam reformer systems for marine, bus, and truck applications. Certification under Lloyd's Register and ABS.</div>
-      <div class="exp-pills">
-        <span class="exp-pill">500 kW PEM fuel cell</span>
-        <span class="exp-pill">Steam reformer</span>
-        <span class="exp-pill">System integration</span>
-        <span class="exp-pill">Lloyd's Register</span>
-        <span class="exp-pill">ABS certification</span>
-        <span class="exp-pill">IATF 16949</span>
-        <span class="exp-pill">IEC 61000</span>
-        <span class="exp-pill">Marine · Bus · Truck</span>
-      </div>
-    </div>
-
-    <div class="exp-card c3">
-      <div class="exp-icon">⚙️</div>
-      <div class="exp-title">Injectors, Compressors, Pumps &amp; Valves</div>
-      <div class="exp-desc">Research on GDI fuel injectors at Bosch, and industrial component ownership of fluid machinery at Freudenberg. Managed ~10 suppliers across a wide range of fluid components.</div>
-      <div class="exp-pills">
-        <span class="exp-pill">GDI fuel injectors</span>
-        <span class="exp-pill">Turbo compressors</span>
-        <span class="exp-pill">Centrifugal pumps</span>
-        <span class="exp-pill">Diaphragm pumps</span>
-        <span class="exp-pill">On/off valves</span>
-        <span class="exp-pill">Safety relief valves</span>
-        <span class="exp-pill">Control valves</span>
-        <span class="exp-pill">Water separators</span>
-        <span class="exp-pill">Process filters</span>
-        <span class="exp-pill">Vent valves</span>
-        <span class="exp-pill">Leak &amp; pressure testing</span>
-        <span class="exp-pill">Supplier management</span>
-      </div>
-    </div>
-
-    <div class="exp-card c4">
-      <div class="exp-icon">🌊</div>
-      <div class="exp-title">Fluid Mechanics</div>
-      <div class="exp-desc">Deep expertise in two-phase flows, cavitation physics, turbulence, and spray dynamics — spanning numerical RANS methods, experimental quantification, and CFD validation.</div>
-      <div class="exp-pills">
-        <span class="exp-pill">Two-phase flow</span>
-        <span class="exp-pill">Cavitation</span>
-        <span class="exp-pill">Spray dynamics</span>
-        <span class="exp-pill">Turbulence</span>
-        <span class="exp-pill">RANS / URANS</span>
-        <span class="exp-pill">ANSYS CFX</span>
-        <span class="exp-pill">Pressure reconstruction</span>
-        <span class="exp-pill">P&amp;ID design</span>
-        <span class="exp-pill">Heat transfer</span>
-      </div>
-    </div>
-
-    <div class="exp-card c5">
-      <div class="exp-icon">🤖</div>
-      <div class="exp-title">Machine Learning &amp; Data Science</div>
-      <div class="exp-desc">Active development of ML and AI skills with certifications in progress. Experience in data analysis and scientific computing with MATLAB and Python applied to large experimental datasets.</div>
-      <div class="exp-pills">
-        <span class="exp-pill">Python (ML/DS/AI)</span>
-        <span class="exp-pill">MATLAB</span>
-        <span class="exp-pill">Data analysis</span>
-        <span class="exp-pill">Scientific computing</span>
-        <span class="exp-pill">Python PCEP cert.</span>
-        <span class="exp-pill">CertNexus AIBIZ</span>
-        <span class="exp-pill">CertNexus CAIP</span>
-      </div>
-    </div>
-
+  <div class="expertise-teaser">
+    <a href="expertise.html#hydrogen" class="exp-tile c1">
+      <div class="tile-icon">⚡</div>
+      <div class="tile-title">Hydrogen &amp; Fuel Cell Systems</div>
+      <div class="tile-desc">500 kW PEM fuel cell, steam reformer, maritime certification</div>
+      <div class="tile-arrow">Explore →</div>
+    </a>
+    <a href="expertise.html#components" class="exp-tile c2">
+      <div class="tile-icon">⚙️</div>
+      <div class="tile-title">Compressors, Pumps, Valves &amp; Injection</div>
+      <div class="tile-desc">GDI injectors, turbo compressors, pumps, valves, filters</div>
+      <div class="tile-arrow">Explore →</div>
+    </a>
+    <a href="expertise.html#fluid" class="exp-tile c3">
+      <div class="tile-icon">🌊</div>
+      <div class="tile-title">Fluid Mechanics</div>
+      <div class="tile-desc">Cavitation, two-phase flow, spray dynamics, RANS, CFD</div>
+      <div class="tile-arrow">Explore →</div>
+    </a>
+    <a href="expertise.html#ml" class="exp-tile c4">
+      <div class="tile-icon">🤖</div>
+      <div class="tile-title">Machine Learning &amp; Data Science</div>
+      <div class="tile-desc">Python, scientific computing, ML certifications in progress</div>
+      <div class="tile-arrow">Explore →</div>
+    </a>
+    <a href="expertise.html#norms" class="exp-tile c5">
+      <div class="tile-icon">📋</div>
+      <div class="tile-title">Norms &amp; Regulations</div>
+      <div class="tile-desc">ISO 9001, IATF 16949, IEC 61000, Lloyd's Register, ABS</div>
+      <div class="tile-arrow">Explore →</div>
+    </a>
   </div>
 </section>
 
-<!-- EXPERIENCE -->
 <section id="experience">
   <div class="section-label">Professional experience</div>
   <div class="timeline">
-
     <div class="tl-item">
       <div class="tl-date">Nov 2022<br>Mar 2026</div>
       <div class="tl-line"><div class="tl-dot"></div><div class="tl-bar"></div></div>
       <div class="tl-content">
-        <div class="domain-dots"><span class="dd c2"></span><span class="dd c3"></span></div>
         <div class="tl-org">Freudenberg e-Power Systems GmbH</div>
         <div class="tl-role">Component Owner · Deputy Team Lead</div>
-        <div class="tl-desc">Led development of 500 kW fuel cell and steam reformer systems for marine, bus, and truck applications. Managed approximately 10 suppliers and held component ownership for turbo compressors, centrifugal and diaphragm pumps, on/off valves, safety relief valves, water separators, vent valves, process filters, and control valves. Responsible for leak and pressure testing, system integration, requirements management (Polarion), and certification under Lloyd's Register and ABS. Deputy team lead responsibility.</div>
-        <div class="tl-tags">
-          <span class="tl-tag">500 kW fuel cell</span><span class="tl-tag">Steam reformer</span><span class="tl-tag">~10 suppliers</span><span class="tl-tag">Turbo compressors</span><span class="tl-tag">Pumps &amp; valves</span><span class="tl-tag">Leak &amp; pressure testing</span><span class="tl-tag">Polarion (ALM/RM)</span><span class="tl-tag">Lloyd's Register</span><span class="tl-tag">ABS</span><span class="tl-tag">IATF 16949</span><span class="tl-tag">Marine · Bus · Truck</span>
-        </div>
+        <div class="tl-desc">Led development of 500 kW fuel cell and steam reformer systems for marine, bus, and truck applications. Managed approximately 10 suppliers and held component ownership for turbo compressors, centrifugal and diaphragm pumps, on/off valves, safety relief valves, water separators, vent valves, process filters, and control valves. Responsible for leak and pressure testing, system integration, requirements management (Polarion), and certification under Lloyd's Register and ABS.</div>
+        <div class="tl-tags"><span class="tl-tag">500 kW fuel cell</span><span class="tl-tag">Steam reformer</span><span class="tl-tag">~10 suppliers</span><span class="tl-tag">Pumps &amp; valves</span><span class="tl-tag">Leak &amp; pressure testing</span><span class="tl-tag">Polarion (ALM/RM)</span><span class="tl-tag">Lloyd's Register</span><span class="tl-tag">ABS</span><span class="tl-tag">IATF 16949</span><span class="tl-tag">Marine · Bus · Truck</span></div>
       </div>
     </div>
-
     <div class="tl-item">
       <div class="tl-date">Jun 2019<br>Oct 2022</div>
       <div class="tl-line"><div class="tl-dot"></div><div class="tl-bar"></div></div>
       <div class="tl-content">
-        <div class="domain-dots"><span class="dd c4"></span><span class="dd c1"></span></div>
         <div class="tl-org">FAU Erlangen-Nürnberg</div>
         <div class="tl-role">Research Engineer · Sub-project Lead</div>
-        <div class="tl-desc">Sub-project lead in a ~€3M publicly funded project on EV battery thermal management. Own budget responsibility of ~€200k. Experimental investigations of heat transfer in battery cooling systems, test bench development, and team coordination.</div>
+        <div class="tl-desc">Sub-project lead in a ~€3M publicly funded project on EV battery thermal management. Own budget responsibility of ~€200k. Experimental investigations of heat transfer in battery systems, test bench development, and team coordination.</div>
         <div class="tl-tags"><span class="tl-tag">EV battery thermal management</span><span class="tl-tag">€200k budget</span><span class="tl-tag">Heat transfer</span><span class="tl-tag">Test bench</span><span class="tl-tag">LabVIEW</span><span class="tl-tag">IMC Famos</span></div>
       </div>
     </div>
-
     <div class="tl-item">
       <div class="tl-date">Jun 2016<br>May 2019</div>
       <div class="tl-line"><div class="tl-dot"></div><div class="tl-bar"></div></div>
       <div class="tl-content">
-        <div class="domain-dots"><span class="dd c1"></span><span class="dd c3"></span><span class="dd c4"></span></div>
         <div class="tl-org">Robert Bosch GmbH · FAU Erlangen-Nürnberg</div>
         <div class="tl-role">PhD Researcher</div>
-        <div class="tl-desc">Industrial PhD on GDI injector internal flow and cavitation. Developed novel micro-PIV technique at 5 MHz framing rate, performed synchrotron X-ray phase-contrast imaging (XPCI) at Argonne National Laboratory, USA. RANS-based pressure reconstruction from experimental velocity data. 3 first-author publications.</div>
-        <div class="tl-tags"><span class="tl-tag">Micro-PIV (5 MHz)</span><span class="tl-tag">Synchrotron XPCI</span><span class="tl-tag">Argonne National Lab</span><span class="tl-tag">Shadowgraphy</span><span class="tl-tag">RANS / CFD</span><span class="tl-tag">Cavitation</span><span class="tl-tag">GDI injectors</span></div>
+        <div class="tl-desc">Industrial PhD on GDI injector internal flow and cavitation. Developed novel micro-PIV technique at 5 MHz framing rate, performed synchrotron X-ray phase-contrast imaging (XPCI) at Argonne National Laboratory, USA. RANS-based pressure reconstruction from experimental data. 3 first-author publications.</div>
+        <div class="tl-tags"><span class="tl-tag">Micro-PIV (5 MHz)</span><span class="tl-tag">Synchrotron XPCI</span><span class="tl-tag">Argonne National Lab</span><span class="tl-tag">Shadowgraphy</span><span class="tl-tag">RANS / CFD</span><span class="tl-tag">Cavitation</span></div>
       </div>
     </div>
-
     <div class="tl-item">
       <div class="tl-date">Oct 2015<br>Jan 2016</div>
       <div class="tl-line"><div class="tl-dot"></div><div class="tl-bar"></div></div>
       <div class="tl-content">
-        <div class="domain-dots"><span class="dd c1"></span><span class="dd c3"></span></div>
         <div class="tl-org">Robert Bosch GmbH</div>
         <div class="tl-role">Engineering Intern</div>
         <div class="tl-desc">Internship in powertrain solutions, optical diagnostics of fuel injection systems.</div>
         <div class="tl-tags"><span class="tl-tag">Optical diagnostics</span><span class="tl-tag">GDI injection</span></div>
       </div>
     </div>
-
   </div>
 </section>
 
-<!-- EDUCATION -->
 <section id="education">
   <div class="section-label">Education</div>
   <div class="timeline">
@@ -368,7 +310,7 @@
       <div class="tl-content">
         <div class="tl-org">Dr.-Ing. <span style="color:var(--accent)">magna cum laude</span></div>
         <div class="tl-role">FAU Erlangen-Nürnberg · Robert Bosch GmbH</div>
-        <div class="tl-desc">Dissertation on internal flow, cavitation, and spray dynamics of GDI fuel injectors. Methods: micro-PIV, high-speed shadowgraphy, synchrotron X-ray imaging.</div>
+        <div class="tl-desc">Dissertation on internal flow, cavitation, and spray dynamics of GDI fuel injectors.</div>
         <div class="tl-tags"><span class="tl-tag">Erika-Giehrl-Stiftung scholarship</span></div>
       </div>
     </div>
@@ -378,7 +320,7 @@
       <div class="tl-content">
         <div class="tl-org">MSc Advanced Optical Technologies <span style="color:var(--accent)">— with distinction</span></div>
         <div class="tl-role">FAU Erlangen-Nürnberg</div>
-        <div class="tl-desc">Thesis: laminar burning velocities of fuels and biofuels using Heat Flux burner. Continued as research assistant (Hiwi) for 2 years post-thesis.</div>
+        <div class="tl-desc">Thesis: laminar burning velocities of fuels and biofuels using Heat Flux burner. Continued as Hiwi researcher for 2 years post-thesis.</div>
         <div class="tl-tags"><span class="tl-tag">Prof. Riedle-Foundation (Siemens AG) scholarship</span></div>
       </div>
     </div>
@@ -388,7 +330,7 @@
       <div class="tl-content">
         <div class="tl-org">MSc Nuclear Power Engineering &amp; Thermal Physics <span style="color:var(--accent)">— with distinction</span></div>
         <div class="tl-role">Moscow Power Engineering Institute</div>
-        <div class="tl-desc">Thesis: optical investigation of spray droplets using LDA/PDA — droplet size and velocity distributions.</div>
+        <div class="tl-desc">Thesis: optical investigation of spray droplets using LDA/PDA.</div>
       </div>
     </div>
     <div class="tl-item">
@@ -397,13 +339,12 @@
       <div class="tl-content">
         <div class="tl-org">BSc Technical Physics <span style="color:var(--accent)">— with distinction</span></div>
         <div class="tl-role">Moscow Power Engineering Institute</div>
-        <div class="tl-desc">Thesis: numerical investigation of thermal phenomena — boiling regimes (nucleate, transition, film boiling / Leidenfrost effect), applied to nuclear power plant safety.</div>
+        <div class="tl-desc">Thesis: numerical investigation of boiling regimes on superheated surfaces — applied to nuclear power plant safety.</div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- PUBLICATIONS -->
 <section id="publications">
   <div class="section-label">Peer-reviewed publications</div>
   <div class="pubs">
@@ -420,45 +361,23 @@
     <div class="pub-card">
       <div class="pub-title">High speed shadowgraphy of transparent nozzles as an evaluation tool for in-nozzle cavitation behavior of GDI injectors</div>
       <div class="pub-venue">ILASS–Europe 2017, 28th Conference on Liquid Atomization and Spray Systems · Valencia, Spain</div>
-      <div class="pub-badges"><span class="pub-badge badge-blue">1st author</span><span class="pub-badge badge-gray">High-speed shadowgraphy</span><span class="pub-badge badge-gray">GDI nozzle cavitation</span><span class="pub-badge badge-gray">Transparent nozzles</span></div>
+      <div class="pub-badges"><span class="pub-badge badge-blue">1st author</span><span class="pub-badge badge-gray">High-speed shadowgraphy</span><span class="pub-badge badge-gray">GDI nozzle cavitation</span></div>
     </div>
   </div>
 </section>
 
-<!-- SKILLS -->
 <section id="skills">
   <div class="section-label">Tools &amp; methods</div>
   <div class="skills-grid">
-    <div class="skill-group">
-      <div class="skill-group-title">Engineering</div>
-      <div class="skill-pills"><span class="skill-pill">Thermodynamics</span><span class="skill-pill">Heat transfer</span><span class="skill-pill">Fluid mechanics</span><span class="skill-pill">CFD / RANS</span><span class="skill-pill">P&amp;ID design</span><span class="skill-pill">Commissioning</span><span class="skill-pill">FMEA</span></div>
-    </div>
-    <div class="skill-group">
-      <div class="skill-group-title">Software</div>
-      <div class="skill-pills"><span class="skill-pill">MATLAB</span><span class="skill-pill">Python</span><span class="skill-pill">LabVIEW</span><span class="skill-pill">IMC Famos</span><span class="skill-pill">SolidWorks</span><span class="skill-pill">ANSYS CFX</span><span class="skill-pill">Aveva</span><span class="skill-pill">Polarion</span></div>
-    </div>
-    <div class="skill-group">
-      <div class="skill-group-title">Standards</div>
-      <div class="skill-pills"><span class="skill-pill">ISO 9001</span><span class="skill-pill">IATF 16949</span><span class="skill-pill">IEC 61000</span><span class="skill-pill">Lloyd's Register</span><span class="skill-pill">ABS</span></div>
-    </div>
-    <div class="skill-group">
-      <div class="skill-group-title">Methods &amp; PM</div>
-      <div class="skill-pills"><span class="skill-pill">Scrum (SFPC)</span><span class="skill-pill">Prince2</span><span class="skill-pill">FMEA</span><span class="skill-pill">Requirements Eng.</span></div>
-    </div>
-    <div class="skill-group">
-      <div class="skill-group-title">Languages</div>
-      <div class="skill-pills"><span class="skill-pill">German — fluent</span><span class="skill-pill">English — fluent</span><span class="skill-pill">Russian — native</span></div>
-    </div>
-    <div class="skill-group">
-      <div class="skill-group-title">Certifications</div>
-      <div class="skill-pills"><span class="skill-pill">Scrum SFPC</span><span class="skill-pill">Python PCEP</span><span class="skill-pill">Sealing Technology (FST)</span><span class="skill-pill">Prince2 (in progress)</span><span class="skill-pill">CertNexus AIBIZ</span><span class="skill-pill">CertNexus CAIP</span></div>
-    </div>
+    <div class="skill-group"><div class="skill-group-title">Engineering</div><div class="skill-pills"><span class="skill-pill">Thermodynamics</span><span class="skill-pill">Heat transfer</span><span class="skill-pill">Fluid mechanics</span><span class="skill-pill">CFD / RANS</span><span class="skill-pill">P&amp;ID</span><span class="skill-pill">Commissioning</span><span class="skill-pill">FMEA</span></div></div>
+    <div class="skill-group"><div class="skill-group-title">Software</div><div class="skill-pills"><span class="skill-pill">MATLAB</span><span class="skill-pill">Python</span><span class="skill-pill">LabVIEW</span><span class="skill-pill">IMC Famos</span><span class="skill-pill">SolidWorks</span><span class="skill-pill">ANSYS CFX</span><span class="skill-pill">Aveva</span><span class="skill-pill">Polarion</span></div></div>
+    <div class="skill-group"><div class="skill-group-title">Standards</div><div class="skill-pills"><span class="skill-pill">ISO 9001</span><span class="skill-pill">IATF 16949</span><span class="skill-pill">IEC 61000</span><span class="skill-pill">Lloyd's Register</span><span class="skill-pill">ABS</span></div></div>
+    <div class="skill-group"><div class="skill-group-title">Languages</div><div class="skill-pills"><span class="skill-pill">German — fluent</span><span class="skill-pill">English — fluent</span><span class="skill-pill">Russian — native</span></div></div>
   </div>
 </section>
 
 <footer>
   Dr.-Ing. Dmitrii Mamaikin · Munich, Germany · <a href="mailto:m.dmitrii@yahoo.com" style="color:var(--accent-mid);text-decoration:none">m.dmitrii@yahoo.com</a> · +49 176 61458216
 </footer>
-
 </body>
 </html>
